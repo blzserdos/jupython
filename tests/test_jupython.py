@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 """
-Test module for ``container_template.sif`` singularity build
-or ``container_template`` dockerfile build
+Test module for ``jupython.sif`` singularity build
+or ``jupython`` dockerfile build
 
 In case ``singularity`` is unavailable, the test function(s) should fall
 back to ``docker``.
@@ -20,7 +20,7 @@ import tempfile
 # be revised for the particular usecase.
 cwd = os.getcwd()
 try:
-    pth = os.path.join('containers', 'container_template.sif')
+    pth = os.path.join('containers', 'jupython.sif')
     try:
         runtime = 'apptainer'
         out = subprocess.run(runtime, check=False)
@@ -39,16 +39,16 @@ except FileNotFoundError:
         runtime = 'docker'
         out = subprocess.run(runtime, check=False)
         PREFIX = (f'{runtime} run ' +
-                  'ghcr.io/precimed/container_template python')
+                  'ghcr.io/blzserdos/jupython python')
         PREFIX_MOUNT = (
             f'{runtime} run ' +
             f'--mount type=bind,source={cwd},target={cwd} ' +
-            'ghcr.io/precimed/container_template python')
+            'ghcr.io/blzserdos/jupython python')
         PREFIX_CUSTOM_MOUNT = (
             f'{runtime} run ' +
             f'--mount type=bind,source={cwd},target={cwd} ' +
             '{custom_mount} ' +
-            'ghcr.io/precimed/container_template python')
+            'ghcr.io/blzserdos/jupython python')
     except FileNotFoundError:
         # neither singularity nor docker found, fall back to plain python
         runtime = None
@@ -62,14 +62,14 @@ def test_assert():
     assert True
 
 
-def test_container_template_python():
+def test_jupython_python():
     """test that the Python installation works"""
     call = f'{PREFIX} --version'
     out = subprocess.run(call.split(' '))
     assert out.returncode == 0
 
 
-def test_container_template_python_script():
+def test_jupython_python_script():
     '''test that Python can run a script'''
     cwd = os.getcwd() if runtime == 'docker' else '.'
     call = f'''{PREFIX_MOUNT} {cwd}/tests/extras/hello.py'''
@@ -77,7 +77,7 @@ def test_container_template_python_script():
     assert out.returncode == 0
 
 
-def test_container_template_python_script_from_tempdir():
+def test_jupython_python_script_from_tempdir():
     '''test that the tempdir is working'''
     with tempfile.TemporaryDirectory() as d:
         os.system(f'cp {cwd}/tests/extras/hello.py {d}/')
@@ -93,7 +93,7 @@ def test_container_template_python_script_from_tempdir():
         assert out.returncode == 0
 
 
-def test_container_template_python_packages():
+def test_jupython_python_packages():
     '''test that the Python packages are installed'''
     packages = [
         'numpy',

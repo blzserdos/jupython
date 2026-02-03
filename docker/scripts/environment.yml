@@ -9,8 +9,6 @@ dependencies:
   - scipy=1.14.1
   - seaborn=0.13.2
   - pytest=8.3.3
-  jupyterlab=4.2.5
-  - pip
   - pip:
     - "wheel>=0.46.2"
     - "urllib3>=2.5.0"

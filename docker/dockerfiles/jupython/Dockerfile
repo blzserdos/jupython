@@ -5,7 +5,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /tmp
 COPY /scripts/apt_get_essential.sh .
-RUN bash apt_get_essential.sh && \
+RUN apt-get update && \
+    chmod +x apt_get_essential.sh && \
+    bash apt_get_essential.sh && \
     rm apt_get_essential.sh
 
 

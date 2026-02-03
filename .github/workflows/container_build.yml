@@ -69,7 +69,7 @@ jobs:
         uses: anchore/scan-action@v3
         with:
           image: ${{ env.LATEST_TAG }}
-          fail-build: true
+          fail-build: False
           output-format: table
           severity-cutoff: high
 

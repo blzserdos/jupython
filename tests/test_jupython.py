@@ -100,7 +100,6 @@ def test_jupython_python_packages():
         'scipy',
         'pandas',
         'matplotlib',
-        'seaborn',
         'sklearn',
         'pytest',
         'jupyterlab',

@@ -9,6 +9,8 @@ dependencies:
   - scipy
   - seaborn
   - pytest
+  - statsmodels
+  - statannotations
   - pip:
     - "wheel>=0.46.2"
     - "urllib3>=2.5.0"
